@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(45deg, #c1f64e, #ffa372);
+
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .cart-container {
+            background: #f3ebc1;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            width: 100%;
+            max-width: 600px;
+        }
+        .cart-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .cart-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        .cart-item-details {
+            flex: 1;
+            margin-left: 15px;
+        }
+        .cart-item-details h3 {
+            margin: 0 0 5px 0;
+            font-size: 16px;
+        }
+        .cart-item-details p {
+            margin: 0;
+            color: #666;
+        }
+        .cart-item-actions {
+            text-align: right;
+        }
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+        }
+        .quantity-controls button {
+            width: 30px;
+            height: 30px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .quantity-controls input {
+            width: 40px;
+            height: 30px;
+            text-align: center;
+            margin: 0 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .cart-total {
+            text-align: right;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .buy-now {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+        .buy-now button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .cart-item-select {
+            display: flex;
+            align-items: center;
+        }
+        .cart-item-select input {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="cart-container">
+        <h2>Shopping Cart</h2>
+        <div class="cart-item">
+            <div class="cart-item-select">
+                <input type="checkbox" class="item-select" onchange="updateTotal()">
+            </div>
+            <img src="https://via.placeholder.com/80" alt="Sample Item 1">
+            <div class="cart-item-details">
+                <h3>Sample Item 1</h3>
+                <p>Price: $10.00</p>
+            </div>
+            <div class="cart-item-actions">
+                <div class="quantity-controls">
+                    <button onclick="updateQuantity(this, -1)">-</button>
+                    <input type="number" value="2" min="1" onchange="updateTotal()">
+                    <button onclick="updateQuantity(this, 1)">+</button>
+                </div>
+                <p>Total: $20.00</p>
+            </div>
+        </div>
+        <div class="cart-item">
+            <div class="cart-item-select">
+                <input type="checkbox" class="item-select" onchange="updateTotal()">
+            </div>
+            <img src="https://via.placeholder.com/80" alt="Sample Item 2">
+            <div class="cart-item-details">
+                <h3>Sample Item 2</h3>
+                <p>Price: $15.00</p>
+            </div>
+            <div class="cart-item-actions">
+                <div class="quantity-controls">
+                    <button onclick="updateQuantity(this, -1)">-</button>
+                    <input type="number" value="1" min="1" onchange="updateTotal()">
+                    <button onclick="updateQuantity(this, 1)">+</button>
+                </div>
+                <p>Total: $15.00</p>
+            </div>
+        </div>
+        <div class="cart-item">
+            <div class="cart-item-select">
+                <input type="checkbox" class="item-select" onchange="updateTotal()">
+            </div>
+            <img src="https://via.placeholder.com/80" alt="Sample Item 3">
+            <div class="cart-item-details">
+                <h3>Sample Item 3</h3>
+                <p>Price: $20.00</p>
+            </div>
+            <div class="cart-item-actions">
+                <div class="quantity-controls">
+                    <button onclick="updateQuantity(this, -1)">-</button>
+                    <input type="number" value="3" min="1" onchange="updateTotal()">
+                    <button onclick="updateQuantity(this, 1)">+</button>
+                </div>
+                <p>Total: $60.00</p>
+            </div>
+        </div>
+        <p class="cart-total">Total Cost: $95.00</p>
+        <div class="buy-now">
+            <button onclick="buyNow()">Buy Now</button>
+        </div>
+    </div>
+    <script>
+        function updateQuantity(button, change) {
+            const quantityInput = button.parentElement.querySelector('input');
+            let currentQuantity = parseInt(quantityInput.value);
+            currentQuantity = Math.max(1, currentQuantity + change);
+            quantityInput.value = currentQuantity;
+            updateTotal();
+        }
+
+        function updateTotal() {
+            const cartItems = document.querySelectorAll('.cart-item');
+            let totalCost = 0;
+
+            cartItems.forEach(item => {
+                const isChecked = item.querySelector('.item-select').checked;
+                if (isChecked) {
+                    const price = parseFloat(item.querySelector('.cart-item-details p').textContent.replace('Price: $', ''));
+                    const quantity = parseInt(item.querySelector('input').value);
+                    const itemTotal = price * quantity;
+                    item.querySelector('.cart-item-actions p').textContent = `Total: $${itemTotal.toFixed(2)}`;
+                    totalCost += itemTotal;
+                } else {
+                    item.querySelector('.cart-item-actions p').textContent = "Total: $0.00";
+                }
+            });
+
+            document.querySelector('.cart-total').textContent = `Total Cost: $${totalCost.toFixed(2)}`;
+        }
+
+        function buyNow() {
+            const selectedItems = Array.from(document.querySelectorAll('.cart-item')).filter(item => item.querySelector('.item-select').checked);
+            if (selectedItems.length > 0) {
+                alert("Thank you for your purchase! Your order has been placed.");
+            } else {
+                alert("Please select at least one item to buy.");
+            }
+        }
+    </script>
+</body>
+</html>

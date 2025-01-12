@@ -259,5 +259,93 @@ body {
   }
   
 
-  /* for login page */
-  
+  /* for footer */
+  /* General Footer Styles */
+.footer {
+  background: linear-gradient(45deg, #c1f64e, #ffa372);
+  color: #fff;
+  padding: 20px 10px;
+  font-family: Arial, sans-serif;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Logo Section */
+.footer-logo {
+  flex: 1;
+  min-width: 200px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.footer-logo h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.footer-logo p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+/* Links Section */
+.footer-links {
+  flex: 2;
+  min-width: 300px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.footer-links a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 10px;
+  font-size: 14px;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+/* Social Media Section */
+.footer-social {
+  flex: 1;
+  min-width: 200px;
+  text-align: center;
+}
+
+.footer-social p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.footer-social a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 5px;
+  font-size: 20px;
+}
+
+.footer-social a:hover {
+  color: #000;
+}
+
+/* Copyright Section */
+.footer-copyright {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 12px;
+}
+
+.footer-copyright p {
+  margin: 0;
+}
+
+
